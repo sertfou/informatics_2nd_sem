@@ -19,10 +19,10 @@ struct center{
 };
 double Square(figure *num, int i);
 int Perimetr(figure *num, int i);
-void coordinates(figure *num);
+//void coordinates(figure *num);
 void input(figure *num, int i);
 void newFigure(figure *number, int count);
-void deleteStruct(figure **num, int &count);
+//void deleteStruct(figure **num, int &count);
 void maxSquare(figure *num, int count);
 void maxPerimetr(figure *num, int count);
 void information(figure *num, int count);
@@ -32,7 +32,8 @@ void menu(figure *number, int count);
 
 int main()
 {
-    int count;
+    int o=0;
+    int count=0;
     cout << "Enter count of figure: ";
     if(!(cin >> count)){
         cout << "error!" << endl;
@@ -153,6 +154,13 @@ void input(figure *num, int i){
     }
     if(num[i].n<3){
         cout << "error!" << endl;
+        cout << "enter count of points again ";
+        while (!(cin >> num[i].n)||(num[i].n<3)){
+            cout << "error!" << endl;
+            cout << "enter count of points again ";
+            exit (2);
+        }
+        
         exit (2);
     }
     cout << "enter length ";
@@ -160,12 +168,13 @@ void input(figure *num, int i){
         cout << "error!" << endl;
         exit (4);
     }
+
   /*  cout << "enter coordinates ";
     if(!(cin >> num[i].x) || !(cin >> num[i].y)){
         cout << "error!" << endl;
         exit (3);
-    }
-}*/
+    }*/
+}
 
 
 /*void newFigure(figure *number, int count){
@@ -186,29 +195,31 @@ void input(figure *num, int i){
     delete[] number;
 }*/
 void newFigure(figure *number, int count) {
-    figure *temp = new figure[count+1];
-
-    for (int iStruct = 0; iStruct < count; ++iStruct) {
+    int ncount=count+1;
+    figure *temp = new figure[ncount];
+    
+    for (int iStruct = 0; iStruct < count;iStruct++) {
         temp[iStruct] = number[iStruct];
         cout << temp[iStruct].lg << endl;
         cout << "iStruct: " << iStruct << endl;
     }
     cout << "count: " << count << endl;
-
-    input(&temp[count], count+1);
+    count=ncount;
+    input(&temp[count], count);
     cout << "done 2" << endl;
+   
+    delete[] number;
+    number = temp;
+    cout << "done3 " << endl;
     for (int iStruct = 0; iStruct < count+1; ++iStruct) {
         if (iStruct == count) {
             temp[iStruct].P = Perimetr(&temp[iStruct], iStruct);
             temp[iStruct].S = Square(&temp[iStruct], iStruct);
             cout << "Perimetr " << iStruct+1 << " figure: " << temp[iStruct].P << endl;
             cout << "Square " << iStruct+1 << " figure: " << temp[iStruct].S << endl;
-            coordinates(&temp[iStruct]);
+            //coordinates(&temp[iStruct]);
         }
     }
-    delete[] number;
-    number = temp;
-    cout << "done3 " << endl;
 }
 
 
@@ -246,7 +257,7 @@ void maxSquare(figure *num, int count){
 }
 
 
-void maxPerimetr(figure *num; int count){
+void maxPerimetr(figure *num, int count){
     double maxVal = 0;
     for(int h = 0; h < count; h++){
         if(num[h].P > maxVal){
@@ -263,17 +274,16 @@ void maxPerimetr(figure *num; int count){
 
 void information(figure *num, int count){
     for(int i = 0; i < count; i++){
-    cout << "figure: " << i << " count of points: " << num[i].n << endl;
-    cout << " coordinates of points: " << endl;
-    coordinates(&num[i]);
+    cout << "figure " << i+1<<':' << " count of points: " << num[i].n << endl;
+   // cout << " coordinates of points: " << endl;
+    //coordinates(&num[i]);
     cout << endl << "Square " << Square(num, i) << " Perimetr " << Perimetr(num, i) << endl;
     cout << "DONE" << endl;
     }
 }
 
 
-void menu(figure *number, int count)
-{
+void menu(figure *number, int count){
     char next;
     do{
     int choice;
@@ -295,7 +305,8 @@ void menu(figure *number, int count)
         information(number, count);
         break;
     case 3:
-        deleteStruct(number, count);
+        //deleteStruct(number, count);
+        cout << "not working yet" << endl;
         break;
     case 4:
         int choice2;
@@ -328,7 +339,15 @@ void menu(figure *number, int count)
         cout << "error!" << endl;
         exit (6);
     }
-    }while(next=='y');
+    /*}while(next=='y');
+        cout << "bye bye" << endl;*/
+        if (next=='y'){
+             for(int i = 0; i < 100;i++)
+            {
+                cout<<'\n';
+            }
+        }
+
+    }  while(next=='y'); 
         cout << "bye bye" << endl;
-}
 }
